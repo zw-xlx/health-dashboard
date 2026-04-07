@@ -116,7 +116,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 <!-- ============ PWV ============ -->
 <div class="section" id="sec-pwv">
   <div class="section-title">🫀 脉搏波传导速度 (PWV)</div>
-  <p class="section-sub">Withings Body Scan · 2026-03-30 至 2026-04-06 · 共 6 条</p>
+  <p class="section-sub">Withings Body Scan · 2026-03-31 至 2026-04-06 · 共 5 条</p>
   <div class="stats" id="stats-pwv"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-pwv"></canvas></div></div>
   <div class="bar-section">
@@ -168,7 +168,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-readiness"></div></div>
 </div>
 
-<footer>数据来源：Oura Ring API + Withings API · 实际年龄 35 岁 · 更新时间 2026-04-07 12:36 CST · 每日自动更新</footer>
+<footer>数据来源：Oura Ring API + Withings API · 实际年龄 35 岁 · 更新时间 2026-04-07 12:38 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -390,12 +390,11 @@ const DATA = {
 ["2026-04-06",79.4]
 ],
   pwv: [
-["2026-03-30",25.268],
-["2026-03-31",33.258],
-["2026-04-01",27.47],
-["2026-04-03",30.202],
-["2026-04-05",29.878],
-["2026-04-06",27.346]
+["2026-03-31",6.284],
+["2026-04-01",6.274],
+["2026-04-03",6.25],
+["2026-04-05",6.254],
+["2026-04-06",6.257]
 ],
   hrv: [
 ["2025-08-28",32],
@@ -1196,8 +1195,8 @@ function buildLineChart(canvasId, data, label, unit, yMin, yMax, color, refLine)
 function colorVascular(v){return v<=30?'#3fb950':v<=32?'#58a6ff':v<=34?'#d29922':'#f85149'}
 function colorWeight(v){return v<=78?'#3fb950':v<=82?'#58a6ff':v<=85?'#d29922':'#f85149'}
 function colorBodyfat(v){return v<=18?'#3fb950':v<=22?'#58a6ff':v<=25?'#d29922':'#f85149'}
-function colorMuscle(v){return v>=42?'#3fb950':v>=38?'#58a6ff':v>=35?'#d29922':'#f85149'}
-function colorPwv(v){return v<=7?'#3fb950':v<=9?'#58a6ff':v<=11?'#d29922':'#f85149'}
+function colorMuscle(v){return v>=80?'#3fb950':v>=75?'#58a6ff':v>=70?'#d29922':'#f85149'}
+function colorPwv(v){return v<=7.5?'#3fb950':v<=9?'#58a6ff':v<=11?'#d29922':'#f85149'}
 function colorHrv(v){return v>=50?'#3fb950':v>=35?'#58a6ff':v>=25?'#d29922':'#f85149'}
 function colorSleep(v){return v>=85?'#3fb950':v>=70?'#58a6ff':v>=60?'#d29922':'#f85149'}
 function colorReadiness(v){return v>=85?'#3fb950':v>=70?'#58a6ff':v>=60?'#d29922':'#f85149'}
@@ -1279,17 +1278,17 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
   var st = calcStats(vals);
   renderStats('stats-muscle', st, function(s){
     return [
-      {label:'平均肌肉率',value:s.avg.toFixed(1)+'%',cls:s.avg>=40?'good':'warn'},
-      {label:'最新',value:s.latest.toFixed(1)+'%',cls:s.latest>=40?'good':'warn'},
+      {label:'平均肌肉率',value:s.avg.toFixed(1)+'%',cls:s.avg>=75?'good':'warn'},
+      {label:'最新',value:s.latest.toFixed(1)+'%',cls:s.latest>=75?'good':'warn'},
       {label:'最低',value:s.min.toFixed(1)+'%',cls:''},
       {label:'最高',value:s.max.toFixed(1)+'%',cls:'good'},
       {label:'记录次数',value:s.count+'次',cls:''}
     ];
   });
-  buildLineChart('chart-muscle',d,'肌肉率','%',25,55,'#3fb950',null);
-  renderWeeklyBars('weekly-muscle',d,colorMuscle,25,55,fmtN);
-  renderBars('monthly-muscle',groupByMonth(d),colorMuscle,25,55,fmtN);
-  renderBars('yearly-muscle',groupByYear(d),colorMuscle,25,55,fmtN);
+  buildLineChart('chart-muscle',d,'肌肉率','%',60,95,'#3fb950',null);
+  renderWeeklyBars('weekly-muscle',d,colorMuscle,60,95,fmtN);
+  renderBars('monthly-muscle',groupByMonth(d),colorMuscle,60,95,fmtN);
+  renderBars('yearly-muscle',groupByYear(d),colorMuscle,60,95,fmtN);
 })();
 
 // 5. PWV
