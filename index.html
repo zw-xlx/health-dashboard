@@ -19,8 +19,21 @@ h1 { text-align: center; font-size: 1.4em; margin-bottom: 4px; }
 .stat-label { font-size: 0.8em; color: #8b949e; margin-top: 4px; }
 .chart-container { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-bottom: 20px; max-width: 900px; margin-left: auto; margin-right: auto; }
 .chart-wrap { position: relative; height: 350px; }
-.monthly { max-width: 900px; margin: 0 auto 20px; }
+.section-row { display: flex; gap: 20px; max-width: 900px; margin: 0 auto 20px; flex-wrap: wrap; }
+.weekly { flex: 1; min-width: 280px; }
+.weekly h3 { margin-bottom: 12px; font-size: 1em; }
+.monthly { flex: 1; min-width: 280px; }
 .monthly h3 { margin-bottom: 12px; font-size: 1em; }
+.yearly { max-width: 900px; margin: 0 auto 20px; }
+.yearly h3 { margin-bottom: 12px; font-size: 1em; }
+.week-row { display: flex; align-items: center; margin-bottom: 6px; font-size: 0.85em; }
+.week-label { width: 100px; color: #8b949e; font-size: 0.78em; }
+.week-bar-bg { flex: 1; background: #21262d; border-radius: 4px; height: 22px; position: relative; overflow: hidden; }
+.week-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 0.8em; font-weight: 600; }
+.year-row { display: flex; align-items: center; margin-bottom: 6px; font-size: 0.85em; }
+.year-label { width: 70px; color: #8b949e; }
+.year-bar-bg { flex: 1; background: #21262d; border-radius: 4px; height: 26px; position: relative; overflow: hidden; }
+.year-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 0.85em; font-weight: 600; }
 .month-row { display: flex; align-items: center; margin-bottom: 6px; font-size: 0.85em; }
 .month-label { width: 70px; color: #8b949e; }
 .month-bar-bg { flex: 1; background: #21262d; border-radius: 4px; height: 22px; position: relative; overflow: hidden; }
@@ -45,9 +58,20 @@ footer { text-align: center; color: #484f58; font-size: 0.75em; margin-top: 30px
   <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
 </div>
 
-<div class="monthly">
-  <h3>📅 月度均值</h3>
-  <div id="monthlyBars"></div>
+<div class="section-row">
+  <div class="weekly">
+    <h3>📆 最近8周均值</h3>
+    <div id="weeklyBars"></div>
+  </div>
+  <div class="monthly">
+    <h3>📅 月度均值</h3>
+    <div id="monthlyBars"></div>
+  </div>
+</div>
+
+<div class="yearly">
+  <h3>📈 年度均值</h3>
+  <div id="yearlyBars"></div>
 </div>
 
 <div class="dist">
@@ -180,6 +204,54 @@ Object.keys(months).sort().forEach(function(m) {
   var color = a <= 30 ? '#3fb950' : a <= 32 ? '#58a6ff' : a <= 34 ? '#d29922' : '#f85149';
   monthlyEl.innerHTML += '<div class="month-row"><span class="month-label">'+m+'</span><div class="month-bar-bg"><div class="month-bar" style="width:'+pct+'%;background:'+color+'">'+a.toFixed(1)+'</div></div></div>';
 });
+
+// Weekly averages (last 8 weeks)
+var weeklyEl = document.getElementById('weeklyBars');
+(function() {
+  // Group by ISO week
+  var weeks = {};
+  rawData.forEach(function(d) {
+    var dt = new Date(d[0] + 'T00:00:00');
+    // Get Monday of the week
+    var day = dt.getDay();
+    var diff = dt.getDate() - day + (day === 0 ? -6 : 1);
+    var monday = new Date(dt);
+    monday.setDate(diff);
+    var key = monday.toISOString().slice(0,10);
+    (weeks[key] = weeks[key] || []).push(d[1]);
+  });
+  var weekKeys = Object.keys(weeks).sort();
+  var last8 = weekKeys.slice(-8);
+  last8.forEach(function(wk) {
+    var vals = weeks[wk];
+    var a = vals.reduce(function(s,v){return s+v},0)/vals.length;
+    var pct = ((a - 20) / (barMax - 20)) * 100;
+    var color = a <= 30 ? '#3fb950' : a <= 32 ? '#58a6ff' : a <= 34 ? '#d29922' : '#f85149';
+    var endDt = new Date(wk + 'T00:00:00');
+    endDt.setDate(endDt.getDate() + 6);
+    var label = wk.slice(5) + '~' + endDt.toISOString().slice(5,10);
+    weeklyEl.innerHTML += '<div class="week-row"><span class="week-label">'+label+'</span><div class="week-bar-bg"><div class="week-bar" style="width:'+pct+'%;background:'+color+'">'+a.toFixed(1)+' (n='+vals.length+')</div></div></div>';
+  });
+})();
+
+// Yearly averages
+var yearlyEl = document.getElementById('yearlyBars');
+(function() {
+  var years = {};
+  rawData.forEach(function(d) {
+    var y = d[0].slice(0,4);
+    (years[y] = years[y] || []).push(d[1]);
+  });
+  Object.keys(years).sort().forEach(function(y) {
+    var vals = years[y];
+    var a = vals.reduce(function(s,v){return s+v},0)/vals.length;
+    var pct = ((a - 20) / (barMax - 20)) * 100;
+    var color = a <= 30 ? '#3fb950' : a <= 32 ? '#58a6ff' : a <= 34 ? '#d29922' : '#f85149';
+    var younger = ACTUAL_AGE - a;
+    var tag = younger > 0 ? '（年轻'+younger.toFixed(1)+'岁）' : '';
+    yearlyEl.innerHTML += '<div class="year-row"><span class="year-label">'+y+'年</span><div class="year-bar-bg"><div class="year-bar" style="width:'+pct+'%;background:'+color+'">'+a.toFixed(1)+'岁 '+tag+' (n='+vals.length+')</div></div></div>';
+  });
+})();
 
 const dist = {};
 ages.forEach(function(v) { dist[v] = (dist[v]||0)+1; });
