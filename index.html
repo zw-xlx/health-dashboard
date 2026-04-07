@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>血管弹性年龄趋势 · 醉翁爸爸</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #e6edf3; padding: 20px; }
+h1 { text-align: center; font-size: 1.4em; margin-bottom: 4px; }
+.subtitle { text-align: center; color: #8b949e; font-size: 0.9em; margin-bottom: 20px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto; }
+.stat-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px; text-align: center; }
+.stat-value { font-size: 1.8em; font-weight: 700; color: #58a6ff; }
+.stat-value.good { color: #3fb950; }
+.stat-value.warn { color: #d29922; }
+.stat-label { font-size: 0.8em; color: #8b949e; margin-top: 4px; }
+.chart-container { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-bottom: 20px; max-width: 900px; margin-left: auto; margin-right: auto; }
+.chart-wrap { position: relative; height: 350px; }
+.monthly { max-width: 900px; margin: 0 auto 20px; }
+.monthly h3 { margin-bottom: 12px; font-size: 1em; }
+.month-row { display: flex; align-items: center; margin-bottom: 6px; font-size: 0.85em; }
+.month-label { width: 70px; color: #8b949e; }
+.month-bar-bg { flex: 1; background: #21262d; border-radius: 4px; height: 22px; position: relative; overflow: hidden; }
+.month-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 0.8em; font-weight: 600; }
+.dist { max-width: 900px; margin: 0 auto; }
+.dist h3 { margin-bottom: 12px; font-size: 1em; }
+.dist-row { display: flex; align-items: center; margin-bottom: 4px; font-size: 0.82em; }
+.dist-label { width: 45px; text-align: right; color: #8b949e; padding-right: 8px; }
+.dist-bar { height: 18px; background: #58a6ff; border-radius: 3px; min-width: 2px; transition: width 0.3s; }
+.dist-count { margin-left: 6px; color: #8b949e; }
+footer { text-align: center; color: #484f58; font-size: 0.75em; margin-top: 30px; }
+</style>
+</head>
+<body>
+
+<h1>❤️ 血管弹性年龄趋势</h1>
+<p class="subtitle">Oura Ring CVA · 2025-08-28 至 2026-04-07 · 共 190 天</p>
+
+<div class="stats" id="stats"></div>
+
+<div class="chart-container">
+  <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
+</div>
+
+<div class="monthly">
+  <h3>📅 月度均值</h3>
+  <div id="monthlyBars"></div>
+</div>
+
+<div class="dist">
+  <h3>📊 数值分布</h3>
+  <div id="distBars"></div>
+</div>
+
+<footer>数据来源：Oura Ring API · 实际年龄 35 岁 · 生成时间 2026-04-07</footer>
+
+<script>
+const rawData = [
+["2025-08-28",30],["2025-08-29",30],["2025-08-30",30],["2025-08-31",30],
+["2025-09-01",30],["2025-09-02",30],["2025-09-03",30],["2025-09-04",30],["2025-09-05",30],["2025-09-06",30],["2025-09-07",30],["2025-09-09",30],["2025-09-10",30],["2025-09-11",30],["2025-09-12",32],["2025-09-13",28],["2025-09-14",32],["2025-09-15",28],["2025-09-16",33],["2025-09-17",29],["2025-09-18",30],["2025-09-19",31],["2025-09-20",27],["2025-09-22",30],["2025-09-23",35],["2025-09-24",29],["2025-09-25",31],["2025-09-26",35],["2025-09-27",33],["2025-09-30",30],
+["2025-10-01",30],["2025-10-02",28],["2025-10-03",29],["2025-10-04",28],["2025-10-05",29],["2025-10-06",30],["2025-10-09",34],["2025-10-10",30],["2025-10-11",32],["2025-10-12",34],["2025-10-13",34],["2025-10-14",31],["2025-10-15",30],["2025-10-21",33],["2025-10-22",32],["2025-10-23",29],["2025-10-24",30],["2025-10-25",32],["2025-10-26",32],["2025-10-27",31],["2025-10-28",34],["2025-10-29",30],["2025-10-30",28],["2025-10-31",32],
+["2025-11-01",35],["2025-11-02",30],["2025-11-08",30],["2025-11-09",31],["2025-11-10",38],["2025-11-11",29],["2025-11-12",31],["2025-11-13",26],["2025-11-14",32],["2025-11-18",34],["2025-11-19",32],["2025-11-21",35],["2025-11-22",33],["2025-11-23",31],["2025-11-24",29],["2025-11-28",28],["2025-11-29",30],["2025-11-30",30],
+["2025-12-01",28],["2025-12-02",34],["2025-12-03",29],["2025-12-04",31],["2025-12-05",28],["2025-12-06",32],["2025-12-07",29],["2025-12-08",31],["2025-12-11",30],["2025-12-12",32],["2025-12-13",37],["2025-12-14",32],["2025-12-15",42],["2025-12-16",30],["2025-12-17",30],["2025-12-18",32],["2025-12-19",32],["2025-12-20",29],["2025-12-21",32],["2025-12-22",30],["2025-12-23",33],["2025-12-24",35],["2025-12-25",35],["2025-12-26",34],["2025-12-28",31],["2025-12-29",31],["2025-12-30",30],["2025-12-31",31],
+["2026-01-01",33],["2026-01-02",33],["2026-01-03",28],["2026-01-04",30],["2026-01-05",31],["2026-01-06",30],["2026-01-07",26],["2026-01-08",32],["2026-01-09",34],["2026-01-10",30],["2026-01-12",28],["2026-01-13",28],["2026-01-14",27],["2026-01-15",28],["2026-01-16",36],["2026-01-17",31],["2026-01-18",30],["2026-01-19",29],["2026-01-20",30],["2026-01-21",31],["2026-01-22",30],["2026-01-23",28],["2026-01-24",29],["2026-01-25",36],["2026-01-26",34],["2026-01-27",31],["2026-01-28",32],["2026-01-29",31],["2026-01-30",31],["2026-01-31",31],
+["2026-02-02",32],["2026-02-03",30],["2026-02-04",33],["2026-02-05",31],["2026-02-06",30],["2026-02-07",33],["2026-02-08",32],["2026-02-11",31],["2026-02-12",32],["2026-02-13",29],["2026-02-14",31],["2026-02-15",32],["2026-02-16",33],["2026-02-17",34],["2026-02-18",31],["2026-02-19",31],["2026-02-20",34],["2026-02-21",28],["2026-02-22",29],["2026-02-23",30],["2026-02-24",32],["2026-02-25",31],["2026-02-26",32],["2026-02-27",30],["2026-02-28",35],
+["2026-03-01",29],["2026-03-02",32],["2026-03-03",31],["2026-03-04",28],["2026-03-05",28],["2026-03-06",33],["2026-03-07",30],["2026-03-08",32],["2026-03-11",29],["2026-03-12",31],["2026-03-13",33],["2026-03-14",31],["2026-03-16",33],["2026-03-17",31],["2026-03-18",33],["2026-03-19",33],["2026-03-20",34],["2026-03-21",33],["2026-03-22",30],["2026-03-23",34],["2026-03-25",28],["2026-03-26",32],["2026-03-27",34],["2026-03-28",34],["2026-03-29",30],["2026-03-30",33],["2026-03-31",35],
+["2026-04-01",31],["2026-04-02",32],["2026-04-03",32],["2026-04-04",32],["2026-04-05",35],["2026-04-06",34],["2026-04-07",30]
+];
+
+const ACTUAL_AGE = 35;
+const ages = rawData.map(d => d[1]);
+const avg = (ages.reduce((a,b)=>a+b,0)/ages.length);
+const sorted = [...ages].sort((a,b)=>a-b);
+const median = sorted[Math.floor(sorted.length/2)];
+const minV = Math.min(...ages);
+const maxV = Math.max(...ages);
+
+// Stats cards
+const statsEl = document.getElementById('stats');
+const cards = [
+  { label: '平均血管年龄', value: avg.toFixed(1)+'岁', cls: 'good' },
+  { label: '比实际年轻', value: (ACTUAL_AGE - avg).toFixed(1)+'岁', cls: 'good' },
+  { label: '中位数', value: median+'岁', cls: '' },
+  { label: '最低', value: minV+'岁', cls: 'good' },
+  { label: '最高', value: maxV+'岁', cls: maxV > ACTUAL_AGE ? 'warn' : '' },
+  { label: '记录天数', value: ages.length+'天', cls: '' },
+];
+cards.forEach(c => {
+  statsEl.innerHTML += `<div class="stat-card"><div class="stat-value ${c.cls}">${c.value}</div><div class="stat-label">${c.label}</div></div>`;
+});
+
+// Main chart
+const ctx = document.getElementById('mainChart').getContext('2d');
+
+// 7-day moving average
+const ma7 = [];
+for (let i = 0; i < rawData.length; i++) {
+  const start = Math.max(0, i-6);
+  const slice = rawData.slice(start, i+1).map(d=>d[1]);
+  ma7.push({ x: rawData[i][0], y: (slice.reduce((a,b)=>a+b,0)/slice.length) });
+}
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    datasets: [
+      {
+        label: '每日血管年龄',
+        data: rawData.map(d => ({x: d[0], y: d[1]})),
+        borderColor: '#58a6ff',
+        backgroundColor: 'rgba(88,166,255,0.1)',
+        borderWidth: 1.5,
+        pointRadius: 2.5,
+        pointHoverRadius: 5,
+        fill: false,
+        tension: 0,
+      },
+      {
+        label: '7日移动平均',
+        data: ma7,
+        borderColor: '#f0883e',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        fill: false,
+        tension: 0.3,
+      },
+      {
+        label: '实际年龄 (35)',
+        data: rawData.map(d => ({x: d[0], y: ACTUAL_AGE})),
+        borderColor: '#f85149',
+        borderWidth: 1.5,
+        borderDash: [6, 4],
+        pointRadius: 0,
+        fill: false,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { labels: { color: '#8b949e', usePointStyle: true, padding: 16 } },
+      tooltip: {
+        backgroundColor: '#1c2128',
+        titleColor: '#e6edf3',
+        bodyColor: '#e6edf3',
+        borderColor: '#30363d',
+        borderWidth: 1,
+        callbacks: {
+          label: (ctx) => {
+            const v = ctx.parsed.y;
+            if (ctx.dataset.label === '实际年龄 (35)') return '';
+            const diff = ACTUAL_AGE - v;
+            const tag = diff > 0 ? `年轻${diff.toFixed(1)}岁` : diff < 0 ? `偏老${Math.abs(diff).toFixed(1)}岁` : '持平';
+            return `${ctx.dataset.label}: ${v.toFixed(1)}岁 (${tag})`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        type: 'time',
+        time: { unit: 'month', tooltipFormat: 'yyyy-MM-dd' },
+        grid: { color: '#21262d' },
+        ticks: { color: '#8b949e' }
+      },
+      y: {
+        min: 20, max: 45,
+        grid: { color: '#21262d' },
+        ticks: { color: '#8b949e', callback: v => v + '岁' }
+      }
+    }
+  }
+});
+
+// Monthly bars
+const months = {};
+rawData.forEach(([d, v]) => {
+  const m = d.slice(0,7);
+  (months[m] = months[m]||[]).push(v);
+});
+const monthlyEl = document.getElementById('monthlyBars');
+const barMax = 36;
+Object.keys(months).sort().forEach(m => {
+  const vals = months[m];
+  const a = vals.reduce((s,v)=>s+v,0)/vals.length;
+  const pct = ((a - 20) / (barMax - 20)) * 100;
+  const color = a <= 30 ? '#3fb950' : a <= 32 ? '#58a6ff' : a <= 34 ? '#d29922' : '#f85149';
+  monthlyEl.innerHTML += `<div class="month-row"><span class="month-label">${m}</span><div class="month-bar-bg"><div class="month-bar" style="width:${pct}%;background:${color}">${a.toFixed(1)}</div></div></div>`;
+});
+
+// Distribution
+const dist = {};
+ages.forEach(v => dist[v] = (dist[v]||0)+1);
+const distEl = document.getElementById('distBars');
+const distMax = Math.max(...Object.values(dist));
+Object.keys(dist).map(Number).sort((a,b)=>a-b).forEach(age => {
+  const cnt = dist[age];
+  const pct = (cnt / distMax) * 100;
+  const color = age <= ACTUAL_AGE ? '#3fb950' : '#f85149';
+  distEl.innerHTML += `<div class="dist-row"><span class="dist-label">${age}岁</span><div class="dist-bar" style="width:${pct}%;background:${color}"></div><span class="dist-count">${cnt}次</span></div>`;
+});
+</script>
+</body>
+</html>
