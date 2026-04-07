@@ -34,6 +34,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .bar-bg{flex:1;background:#21262d;border-radius:4px;height:20px;overflow:hidden}
 .bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:7px;font-size:0.78em;font-weight:600;white-space:nowrap;min-width:fit-content}
 .divider{border:0;border-top:1px solid #21262d;margin:0}
+.today-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.today-card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px;display:flex;flex-direction:column;align-items:center}
+.today-icon{font-size:1.6em;margin-bottom:6px}
+.today-label{font-size:0.78em;color:#8b949e;margin-bottom:4px}
+.today-value{font-size:1.9em;font-weight:700}
+.today-value.good{color:#3fb950}
+.today-value.warn{color:#d29922}
+.today-value.neutral{color:#58a6ff}
+.today-note{font-size:0.72em;color:#6e7681;margin-top:4px}
+.today-no-data{font-size:0.85em;color:#484f58;font-style:italic}
 footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 @media(max-width:600px){
   .stats{grid-template-columns:repeat(2,1fr)}
@@ -48,6 +58,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 <nav class="top-nav" id="topNav">
   <span class="brand">💪 健康仪表盘</span>
   <a href="#sec-vascular">血管年龄</a>
+  <a href="#sec-today">今日概览</a>
   <a href="#sec-weight">体重</a>
   <a href="#sec-bodyfat">体脂率</a>
   <a href="#sec-muscle">肌肉率</a>
@@ -56,6 +67,14 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   <a href="#sec-sleep">睡眠评分</a>
   <a href="#sec-readiness">就绪评分</a>
 </nav>
+
+<!-- ============ 今日概览 ============ -->
+<div class="section" id="sec-today">
+  <div class="section-title">📋 今日数据概览</div>
+  <p class="section-sub" id="today-date"></p>
+  <div class="today-grid" id="today-grid"></div>
+</div>
+<hr class="divider">
 
 <!-- ============ 血管弹性年龄 ============ -->
 <div class="section" id="sec-vascular">
@@ -168,7 +187,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-readiness"></div></div>
 </div>
 
-<footer>数据来源：Oura Ring API + Withings API · 实际年龄 35 岁 · 更新时间 2026-04-07 12:38 CST · 每日自动更新</footer>
+<footer>数据来源：Oura Ring API + Withings API · 实际年龄 35 岁 · 更新时间 2026-04-07 13:22 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -1376,6 +1395,52 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
   renderWeeklyBars('weekly-readiness',d,colorReadiness,30,100,fmtN);
   renderBars('monthly-readiness',groupByMonth(d),colorReadiness,30,100,fmtN);
   renderBars('yearly-readiness',groupByYear(d),colorReadiness,30,100,fmtN);
+})();
+
+// ===== Today Overview =====
+(function(){
+  var items = [
+    {key:'vascular', icon:'❤️', label:'血管年龄', unit:'岁', decimals:0, colorFn:colorVascular,
+     note:function(v){var d=ACTUAL_AGE-v; return d>0?'年轻'+d+'岁':d<0?'偏老'+Math.abs(d)+'岁':'与实际年龄持平'}},
+    {key:'weight', icon:'⚖️', label:'体重', unit:'kg', decimals:1, colorFn:colorWeight, note:null},
+    {key:'bodyfat', icon:'🔥', label:'体脂率', unit:'%', decimals:1, colorFn:colorBodyfat,
+     note:function(v){return v<=18?'优秀':v<=22?'正常':v<=25?'偏高':'过高'}},
+    {key:'muscle', icon:'💪', label:'肌肉率', unit:'%', decimals:1, colorFn:colorMuscle,
+     note:function(v){return v>=80?'优秀':v>=75?'良好':v>=70?'一般':'偏低'}},
+    {key:'pwv', icon:'🫀', label:'PWV', unit:' m/s', decimals:2, colorFn:colorPwv,
+     note:function(v){return v<8?'正常 (<10)':v<10?'临界':'偏高'}},
+    {key:'hrv', icon:'📈', label:'HRV', unit:'ms', decimals:0, colorFn:colorHrv,
+     note:function(v){return v>=50?'良好':v>=40?'正常':'偏低 (参考40-70)'}},
+    {key:'sleep', icon:'😴', label:'睡眠评分', unit:'分', decimals:0, colorFn:colorSleep,
+     note:function(v){return v>=85?'达标 (≥85)':v>=70?'略低':'不足'}},
+    {key:'readiness', icon:'⚡', label:'就绪评分', unit:'分', decimals:0, colorFn:colorReadiness,
+     note:function(v){return v>=80?'达标 (≥80)':v>=65?'略低':'不足'}}
+  ];
+
+  var grid = document.getElementById('today-grid');
+  var dateEl = document.getElementById('today-date');
+  var todayStr = '';
+  var html = '';
+
+  items.forEach(function(item){
+    var d = DATA[item.key];
+    if (!d || !d.length) {
+      html += '<div class="today-card"><div class="today-icon">'+item.icon+'</div><div class="today-label">'+item.label+'</div><div class="today-no-data">暂无数据</div></div>';
+      return;
+    }
+    var last = d[d.length-1];
+    var date = last[0];
+    var val = last[1];
+    if (!todayStr || date > todayStr) todayStr = date;
+    var color = item.colorFn(val);
+    var cls = color==='#3fb950'?'good':color==='#d29922'?'warn':color==='#f85149'?'bad':'neutral';
+    var display = item.decimals===0 ? Math.round(val) : val.toFixed(item.decimals);
+    var noteText = item.note ? item.note(val) : '';
+    html += '<div class="today-card"><div class="today-icon">'+item.icon+'</div><div class="today-label">'+item.label+'</div><div class="today-value '+cls+'">'+display+'<span style="font-size:0.45em;font-weight:400;color:#8b949e"> '+item.unit+'</span></div>'+(noteText?'<div class="today-note">'+noteText+'</div>':'')+'<div class="today-note" style="color:#484f58">'+date+'</div></div>';
+  });
+
+  grid.innerHTML = html;
+  if (todayStr) dateEl.textContent = '最新数据日期：' + todayStr;
 })();
 
 // ===== Scroll spy for nav =====
