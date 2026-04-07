@@ -57,15 +57,15 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 
 <nav class="top-nav" id="topNav">
   <span class="brand">💪 健康仪表盘</span>
-  <a href="#sec-vascular">血管年龄</a>
   <a href="#sec-today">今日概览</a>
+  <a href="#sec-vascular">血管年龄</a>
+  <a href="#sec-hrv">HRV</a>
+  <a href="#sec-sleep">睡眠评分</a>
+  <a href="#sec-readiness">就绪评分</a>
   <a href="#sec-weight">体重</a>
   <a href="#sec-bodyfat">体脂率</a>
   <a href="#sec-muscle">肌肉率</a>
   <a href="#sec-pwv">PWV</a>
-  <a href="#sec-hrv">HRV</a>
-  <a href="#sec-sleep">睡眠评分</a>
-  <a href="#sec-readiness">就绪评分</a>
 </nav>
 
 <!-- ============ 今日概览 ============ -->
@@ -87,6 +87,48 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
     <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-vascular"></div></div>
   </div>
   <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-vascular"></div></div>
+</div>
+<hr class="divider">
+
+<!-- ============ HRV ============ -->
+<div class="section" id="sec-hrv">
+  <div class="section-title">💓 HRV 均值</div>
+  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-07 · 共 206 天</p>
+  <div class="stats" id="stats-hrv"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-hrv"></canvas></div></div>
+  <div class="bar-section">
+    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-hrv"></div></div>
+    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-hrv"></div></div>
+  </div>
+  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-hrv"></div></div>
+</div>
+<hr class="divider">
+
+<!-- ============ 睡眠评分 ============ -->
+<div class="section" id="sec-sleep">
+  <div class="section-title">😴 睡眠评分</div>
+  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-07 · 共 207 天</p>
+  <div class="stats" id="stats-sleep"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-sleep"></canvas></div></div>
+  <div class="bar-section">
+    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-sleep"></div></div>
+    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-sleep"></div></div>
+  </div>
+  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-sleep"></div></div>
+</div>
+<hr class="divider">
+
+<!-- ============ 就绪评分 ============ -->
+<div class="section" id="sec-readiness">
+  <div class="section-title">⚡ 就绪评分</div>
+  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-07 · 共 207 天</p>
+  <div class="stats" id="stats-readiness"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-readiness"></canvas></div></div>
+  <div class="bar-section">
+    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-readiness"></div></div>
+    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-readiness"></div></div>
+  </div>
+  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-readiness"></div></div>
 </div>
 <hr class="divider">
 
@@ -144,50 +186,8 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   </div>
   <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-pwv"></div></div>
 </div>
-<hr class="divider">
 
-<!-- ============ HRV ============ -->
-<div class="section" id="sec-hrv">
-  <div class="section-title">💓 HRV 均值</div>
-  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-07 · 共 206 天</p>
-  <div class="stats" id="stats-hrv"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-hrv"></canvas></div></div>
-  <div class="bar-section">
-    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-hrv"></div></div>
-    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-hrv"></div></div>
-  </div>
-  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-hrv"></div></div>
-</div>
-<hr class="divider">
-
-<!-- ============ 睡眠评分 ============ -->
-<div class="section" id="sec-sleep">
-  <div class="section-title">😴 睡眠评分</div>
-  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-07 · 共 207 天</p>
-  <div class="stats" id="stats-sleep"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-sleep"></canvas></div></div>
-  <div class="bar-section">
-    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-sleep"></div></div>
-    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-sleep"></div></div>
-  </div>
-  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-sleep"></div></div>
-</div>
-<hr class="divider">
-
-<!-- ============ 就绪评分 ============ -->
-<div class="section" id="sec-readiness">
-  <div class="section-title">⚡ 就绪评分</div>
-  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-07 · 共 207 天</p>
-  <div class="stats" id="stats-readiness"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-readiness"></canvas></div></div>
-  <div class="bar-section">
-    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-readiness"></div></div>
-    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-readiness"></div></div>
-  </div>
-  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-readiness"></div></div>
-</div>
-
-<footer>数据来源：Oura Ring API + Withings API · 实际年龄 35 岁 · 更新时间 2026-04-07 13:22 CST · 每日自动更新</footer>
+<footer>数据来源：Oura Ring API + Withings API · 实际年龄 35 岁 · 更新时间 2026-04-07 13:26 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
