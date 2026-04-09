@@ -79,7 +79,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 <!-- ============ 血管弹性年龄 ============ -->
 <div class="section" id="sec-vascular">
   <div class="section-title">❤️ 血管弹性年龄</div>
-  <p class="section-sub">Oura Ring CVA · 2025-08-28 至 2026-04-08 · 共 191 天</p>
+  <p class="section-sub">Oura Ring CVA · 2025-08-28 至 2026-04-09 · 共 192 天</p>
   <div class="stats" id="stats-vascular"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-vascular"></canvas></div></div>
   <div class="bar-section">
@@ -93,7 +93,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 <!-- ============ HRV ============ -->
 <div class="section" id="sec-hrv">
   <div class="section-title">💓 HRV 均值</div>
-  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-08 · 共 207 天</p>
+  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-09 · 共 208 天</p>
   <div class="stats" id="stats-hrv"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-hrv"></canvas></div></div>
   <div class="bar-section">
@@ -107,7 +107,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 <!-- ============ 睡眠评分 ============ -->
 <div class="section" id="sec-sleep">
   <div class="section-title">😴 睡眠评分</div>
-  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-08 · 共 208 天</p>
+  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-09 · 共 209 天</p>
   <div class="stats" id="stats-sleep"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-sleep"></canvas></div></div>
   <div class="bar-section">
@@ -121,7 +121,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 <!-- ============ 就绪评分 ============ -->
 <div class="section" id="sec-readiness">
   <div class="section-title">⚡ 就绪评分</div>
-  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-08 · 共 208 天</p>
+  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-09 · 共 209 天</p>
   <div class="stats" id="stats-readiness"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-readiness"></canvas></div></div>
   <div class="bar-section">
@@ -187,7 +187,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-pwv"></div></div>
 </div>
 
-<footer>数据来源：Oura Ring API + Withings API · 实际年龄 35 岁 · 更新时间 2026-04-08 10:30 CST · 每日自动更新</footer>
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-09 09:33 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -383,7 +383,8 @@ const DATA = {
 ["2026-04-05",35],
 ["2026-04-06",34],
 ["2026-04-07",30],
-["2026-04-08",28]
+["2026-04-08",28],
+["2026-04-09",35]
 ],
   weight: [
 ["2026-03-30",78.8],
@@ -627,7 +628,8 @@ const DATA = {
 ["2026-04-05",36],
 ["2026-04-06",40],
 ["2026-04-07",44],
-["2026-04-08",46]
+["2026-04-08",46],
+["2026-04-09",48]
 ],
   sleep: [
 ["2025-08-28",84],
@@ -837,7 +839,8 @@ const DATA = {
 ["2026-04-05",84],
 ["2026-04-06",82],
 ["2026-04-07",83],
-["2026-04-08",80]
+["2026-04-08",80],
+["2026-04-09",87]
 ],
   readiness: [
 ["2025-08-28",82],
@@ -1047,11 +1050,15 @@ const DATA = {
 ["2026-04-05",82],
 ["2026-04-06",82],
 ["2026-04-07",82],
-["2026-04-08",78]
+["2026-04-08",78],
+["2026-04-09",84]
 ]
 };
 
-const ACTUAL_AGE = 35;
+// 精确年龄：按月计算，生日 1991-01-15
+var _bday = new Date(1991, 0, 15);
+var _now = new Date();
+var ACTUAL_AGE = Math.round(((_now - _bday) / (365.25 * 24 * 3600 * 1000)) * 10) / 10;
 
 // ===== Utility functions =====
 function calcStats(values) {
@@ -1248,7 +1255,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
       {label:'记录天数',value:s.count+'天',cls:''}
     ];
   });
-  buildLineChart('chart-vascular',d,'血管年龄','岁',20,45,'#58a6ff',{label:'实际年龄(35)',value:35});
+  buildLineChart('chart-vascular',d,'血管年龄','岁',20,45,'#58a6ff',{label:'实际年龄('+ACTUAL_AGE.toFixed(1)+')',value:ACTUAL_AGE});
   renderWeeklyBars('weekly-vascular',d,colorVascular,20,40,fmtN);
   renderBars('monthly-vascular',groupByMonth(d),colorVascular,20,40,fmtN);
   renderBars('yearly-vascular',groupByYear(d),colorVascular,20,40,fmtN);
@@ -1409,7 +1416,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 (function(){
   var items = [
     {key:'vascular', icon:'❤️', label:'血管年龄', unit:'岁', decimals:0, colorFn:colorVascular,
-     note:function(v){var d=ACTUAL_AGE-v; return d>0?'年轻'+d+'岁':d<0?'偏老'+Math.abs(d)+'岁':'与实际年龄持平'}},
+     note:function(v){var d=ACTUAL_AGE-v; return '实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':'')}},
     {key:'weight', icon:'⚖️', label:'体重', unit:'kg', decimals:1, colorFn:colorWeight, note:null},
     {key:'bodyfat', icon:'🔥', label:'体脂率', unit:'%', decimals:1, colorFn:colorBodyfat,
      note:function(v){return v<=18?'优秀':v<=22?'正常':v<=25?'偏高':'过高'}},
@@ -1450,6 +1457,9 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
   grid.innerHTML = html;
   if (todayStr) dateEl.textContent = '最新数据日期：' + todayStr;
 })();
+
+// Update footer with actual age
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-09 09:33 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
