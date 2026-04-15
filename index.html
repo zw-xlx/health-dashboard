@@ -64,10 +64,10 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   <a href="#sec-sleep">睡眠评分</a>
   <a href="#sec-readiness">就绪评分</a>
   <a href="#sec-activity">活动评分</a>
-  <a href="#sec-weight">体重</a>
   <a href="#sec-bodyfat">体脂率</a>
   <a href="#sec-muscle">肌肉率</a>
   <a href="#sec-pwv">PWV</a>
+  <a href="#sec-weight">体重</a>
 </nav>
 
 <!-- ============ 今日概览 ============ -->
@@ -162,20 +162,6 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 </div>
 <hr class="divider">
 
-<!-- ============ 体重 ============ -->
-<div class="section" id="sec-weight">
-  <div class="section-title">⚖️ 体重</div>
-  <p class="section-sub">Withings Body Scan · 2026-03-30 至 2026-04-14 · 共 10 条</p>
-  <div class="stats" id="stats-weight"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-weight"></canvas></div></div>
-  <div class="bar-section">
-    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-weight"></div></div>
-    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-weight"></div></div>
-  </div>
-  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-weight"></div></div>
-</div>
-<hr class="divider">
-
 <!-- ============ 体脂率 ============ -->
 <div class="section" id="sec-bodyfat">
   <div class="section-title">🔥 体脂率</div>
@@ -216,8 +202,22 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   </div>
   <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-pwv"></div></div>
 </div>
+<hr class="divider">
 
-<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-15 10:30 CST · 每日自动更新</footer>
+<!-- ============ 体重 ============ -->
+<div class="section" id="sec-weight">
+  <div class="section-title">⚖️ 体重</div>
+  <p class="section-sub">Withings Body Scan · 2026-03-30 至 2026-04-14 · 共 10 条</p>
+  <div class="stats" id="stats-weight"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-weight"></canvas></div></div>
+  <div class="bar-section">
+    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-weight"></div></div>
+    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-weight"></div></div>
+  </div>
+  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-weight"></div></div>
+</div>
+
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-15 13:16 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -1561,7 +1561,7 @@ const DATA = {
 ["2026-04-12",99],
 ["2026-04-13",91],
 ["2026-04-14",95],
-["2026-04-15",89]
+["2026-04-15",87]
 ]
 };
 
@@ -2019,7 +2019,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 })();
 
 // Update footer with actual age
-document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-15 10:30 CST · 每日自动更新';
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-15 13:16 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
