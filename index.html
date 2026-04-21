@@ -35,6 +35,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:7px;font-size:0.78em;font-weight:600;white-space:nowrap;min-width:fit-content}
 .divider{border:0;border-top:1px solid #21262d;margin:0}
 .today-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.today-grid .row-break{grid-column:1/-1;height:0;border-top:1px dashed #30363d;margin:4px 0;opacity:0.4}
 .today-card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px;display:flex;flex-direction:column;align-items:center}
 .today-icon{font-size:1.6em;margin-bottom:6px}
 .today-label{font-size:0.78em;color:#8b949e;margin-bottom:4px}
@@ -218,7 +219,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 </div>
 
 
-<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-21 16:55 CST · 每日自动更新</footer>
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-21 17:21 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -2025,17 +2026,20 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
     {key:'vascular', icon:'❤️', label:'Oura 血管年龄', unit:'岁', decimals:0, colorFn:colorVascular,
      note:function(v){var d=ACTUAL_AGE-v; return '实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':'')}},
     {key:'withings_va', icon:'🫀', label:'Withings 血管年龄', unit:'岁', decimals:0, colorFn:colorVascular,
-     note:function(v){var d=ACTUAL_AGE-v; return '实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':'')}},
+     note:function(v){var d=ACTUAL_AGE-v; return '实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':'')},
+     breakAfter: true},
     {key:'hrv', icon:'📈', label:'HRV', unit:'ms', decimals:0, colorFn:colorHrv,
      note:function(v){return v>=50?'良好':v>=40?'正常':'偏低 (参考40-70)'}},
     {key:'resting_hr', icon:'💗', label:'静息心率', unit:'bpm', decimals:0, colorFn:colorRhr,
-     note:function(v){return v<=45?'优秀 (40-55)':v<=55?'正常 (40-55)':'偏高'}},
+     note:function(v){return v<=45?'优秀 (40-55)':v<=55?'正常 (40-55)':'偏高'},
+     breakAfter: true},
     {key:'sleep', icon:'😴', label:'睡眠评分', unit:'分', decimals:0, colorFn:colorSleep,
      note:function(v){return v>=85?'达标 (≥85)':v>=70?'略低':'不足'}},
     {key:'readiness', icon:'⚡', label:'就绪评分', unit:'分', decimals:0, colorFn:colorReadiness,
      note:function(v){return v>=80?'达标 (≥80)':v>=65?'略低':'不足'}},
     {key:'activity', icon:'🏃', label:'活动评分', unit:'分', decimals:0, colorFn:colorActivity,
-     note:function(v){return v>=70?'达标 (≥70)':v>=60?'略低':'不足'}},
+     note:function(v){return v>=70?'达标 (≥70)':v>=60?'略低':'不足'},
+     breakAfter: true},
     {key:'weight', icon:'⚖️', label:'体重', unit:'kg', decimals:1, colorFn:colorWeight, note:null},
     {key:'bodyfat', icon:'🔥', label:'体脂率', unit:'%', decimals:1, colorFn:colorBodyfat,
      note:function(v){return v<=18?'优秀':v<=22?'正常':v<=25?'偏高':'过高'}},
@@ -2052,6 +2056,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
     var d = DATA[item.key];
     if (!d || !d.length) {
       html += '<div class="today-card"><div class="today-icon">'+item.icon+'</div><div class="today-label">'+item.label+'</div><div class="today-no-data">暂无数据</div></div>';
+      if (item.breakAfter) html += '<div class="row-break"></div>';
       return;
     }
     var last = d[d.length-1];
@@ -2063,6 +2068,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
     var display = item.decimals===0 ? Math.round(val) : val.toFixed(item.decimals);
     var noteText = item.note ? item.note(val) : '';
     html += '<div class="today-card"><div class="today-icon">'+item.icon+'</div><div class="today-label">'+item.label+'</div><div class="today-value '+cls+'">'+display+'<span style="font-size:0.45em;font-weight:400;color:#8b949e"> '+item.unit+'</span></div>'+(noteText?'<div class="today-note">'+noteText+'</div>':'')+'<div class="today-note" style="color:#484f58">'+date+'</div></div>';
+    if (item.breakAfter) html += '<div class="row-break"></div>';
   });
 
   grid.innerHTML = html;
@@ -2070,7 +2076,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 })();
 
 // Update footer with actual age
-document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-21 16:55 CST · 每日自动更新';
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-21 17:21 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
