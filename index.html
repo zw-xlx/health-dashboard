@@ -61,14 +61,15 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   <a href="#sec-today">今日概览</a>
   <a href="#sec-vascular">Oura 血管年龄</a>
   <a href="#sec-withings-va">Withings 血管年龄</a>
-  <a href="#sec-hrv">HRV</a>
   <a href="#sec-rhr">静息心率</a>
+  <a href="#sec-hrv">HRV</a>
   <a href="#sec-sleep">睡眠评分</a>
   <a href="#sec-readiness">就绪评分</a>
   <a href="#sec-activity">活动评分</a>
-  <a href="#sec-weight">体重</a>
   <a href="#sec-bodyfat">体脂率</a>
+  <a href="#sec-visceral">内脏脂肪</a>
   <a href="#sec-muscle">肌肉率</a>
+  <a href="#sec-weight">体重</a>
 </nav>
 
 <!-- ============ 今日概览 ============ -->
@@ -107,20 +108,6 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 </div>
 <hr class="divider">
 
-<!-- ============ HRV ============ -->
-<div class="section" id="sec-hrv">
-  <div class="section-title">💓 HRV 均值</div>
-  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-22 · 共 221 天</p>
-  <div class="stats" id="stats-hrv"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-hrv"></canvas></div></div>
-  <div class="bar-section">
-    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-hrv"></div></div>
-    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-hrv"></div></div>
-  </div>
-  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-hrv"></div></div>
-</div>
-<hr class="divider">
-
 <!-- ============ 静息心率 ============ -->
 <div class="section" id="sec-rhr">
   <div class="section-title">💗 静息心率</div>
@@ -132,6 +119,20 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
     <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-rhr"></div></div>
   </div>
   <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-rhr"></div></div>
+</div>
+<hr class="divider">
+
+<!-- ============ HRV ============ -->
+<div class="section" id="sec-hrv">
+  <div class="section-title">💓 HRV 均值</div>
+  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-04-22 · 共 221 天</p>
+  <div class="stats" id="stats-hrv"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-hrv"></canvas></div></div>
+  <div class="bar-section">
+    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-hrv"></div></div>
+    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-hrv"></div></div>
+  </div>
+  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-hrv"></div></div>
 </div>
 <hr class="divider">
 
@@ -177,20 +178,6 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 </div>
 <hr class="divider">
 
-<!-- ============ 体重 ============ -->
-<div class="section" id="sec-weight">
-  <div class="section-title">⚖️ 体重</div>
-  <p class="section-sub">Withings Body Scan · 2026-03-30 至 2026-04-22 · 共 14 条</p>
-  <div class="stats" id="stats-weight"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-weight"></canvas></div></div>
-  <div class="bar-section">
-    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-weight"></div></div>
-    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-weight"></div></div>
-  </div>
-  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-weight"></div></div>
-</div>
-<hr class="divider">
-
 <!-- ============ 体脂率 ============ -->
 <div class="section" id="sec-bodyfat">
   <div class="section-title">🔥 体脂率</div>
@@ -202,6 +189,20 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
     <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-bodyfat"></div></div>
   </div>
   <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-bodyfat"></div></div>
+</div>
+<hr class="divider">
+
+<!-- ============ 内脏脂肪 ============ -->
+<div class="section" id="sec-visceral">
+  <div class="section-title">🫁 内脏脂肪</div>
+  <p class="section-sub">Withings Body Scan · 2026-03-30 至 2026-04-22 · 共 14 条</p>
+  <div class="stats" id="stats-visceral"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-visceral"></canvas></div></div>
+  <div class="bar-section">
+    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-visceral"></div></div>
+    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-visceral"></div></div>
+  </div>
+  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-visceral"></div></div>
 </div>
 <hr class="divider">
 
@@ -217,9 +218,23 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   </div>
   <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-muscle"></div></div>
 </div>
+<hr class="divider">
+
+<!-- ============ 体重 ============ -->
+<div class="section" id="sec-weight">
+  <div class="section-title">⚖️ 体重</div>
+  <p class="section-sub">Withings Body Scan · 2026-03-30 至 2026-04-22 · 共 14 条</p>
+  <div class="stats" id="stats-weight"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-weight"></canvas></div></div>
+  <div class="bar-section">
+    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-weight"></div></div>
+    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-weight"></div></div>
+  </div>
+  <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-weight"></div></div>
+</div>
 
 
-<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-22 10:01 CST · 每日自动更新</footer>
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-22 11:26 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -476,6 +491,22 @@ const DATA = {
 ["2026-04-18",80.3],
 ["2026-04-21",79.5],
 ["2026-04-22",80.6]
+],
+  visceral: [
+["2026-03-30",2.0],
+["2026-03-31",1.6],
+["2026-04-01",2.0],
+["2026-04-03",1.9],
+["2026-04-05",2.0],
+["2026-04-06",2.0],
+["2026-04-08",1.9],
+["2026-04-10",1.9],
+["2026-04-13",2.1],
+["2026-04-14",2.0],
+["2026-04-16",1.9],
+["2026-04-18",1.9],
+["2026-04-21",2.0],
+["2026-04-22",1.9]
 ],
   withings_va: [
 ["2026-03-30",31],
@@ -1807,6 +1838,7 @@ function colorSleep(v){return v>=85?'#3fb950':v>=70?'#58a6ff':v>=60?'#d29922':'#
 function colorReadiness(v){return v>=85?'#3fb950':v>=70?'#58a6ff':v>=60?'#d29922':'#f85149'}
 function colorRhr(v){return v<=45?'#3fb950':v<=55?'#58a6ff':v<=65?'#d29922':'#f85149'}
 function colorActivity(v){return v>=85?'#3fb950':v>=70?'#58a6ff':v>=60?'#d29922':'#f85149'}
+function colorVisceral(v){return v<=6?'#3fb950':v<=12?'#58a6ff':v<=17?'#d29922':'#f85149'}
 
 function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 
@@ -1897,6 +1929,27 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
   renderWeeklyBars('weekly-bodyfat',d,colorBodyfat,5,35,fmtN);
   renderBars('monthly-bodyfat',groupByMonth(d),colorBodyfat,5,35,fmtN);
   renderBars('yearly-bodyfat',groupByYear(d),colorBodyfat,5,35,fmtN);
+})();
+
+// 3b. Visceral Fat
+(function(){
+  var d = DATA.visceral;
+  if(!d.length) return;
+  var vals = d.map(function(x){return x[1]});
+  var st = calcStats(vals);
+  renderStats('stats-visceral', st, function(s){
+    return [
+      {label:'平均值',value:s.avg.toFixed(1),cls:s.avg<=12?'good':s.avg<=17?'warn':'bad'},
+      {label:'最新',value:s.latest.toFixed(1),cls:s.latest<=12?'good':s.latest<=17?'warn':'bad'},
+      {label:'最低',value:s.min.toFixed(1),cls:'good'},
+      {label:'最高',value:s.max.toFixed(1),cls:''},
+      {label:'记录次数',value:s.count+'次',cls:''}
+    ];
+  });
+  buildLineChart('chart-visceral',d,'内脏脂肪','',0,20,'#d29922',{label:'安全线(12)',value:12});
+  renderWeeklyBars('weekly-visceral',d,colorVisceral,0,20,fmtN);
+  renderBars('monthly-visceral',groupByMonth(d),colorVisceral,0,20,fmtN);
+  renderBars('yearly-visceral',groupByYear(d),colorVisceral,0,20,fmtN);
 })();
 
 // 4. Muscle %
@@ -2038,10 +2091,10 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
     {key:'withings_va', icon:'🫀', label:'Withings 血管年龄', unit:'岁', decimals:0, colorFn:colorVascular,
      note:function(v){var d=ACTUAL_AGE-v; return '实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':'')},
      breakAfter: true},
-    {key:'hrv', icon:'📈', label:'HRV', unit:'ms', decimals:0, colorFn:colorHrv,
-     note:function(v){return v>=50?'良好':v>=40?'正常':'偏低 (参考40-70)'}},
     {key:'resting_hr', icon:'💗', label:'静息心率', unit:'bpm', decimals:0, colorFn:colorRhr,
-     note:function(v){return v<=45?'优秀 (40-55)':v<=55?'正常 (40-55)':'偏高'},
+     note:function(v){return v<=45?'优秀 (40-55)':v<=55?'正常 (40-55)':'偏高'}},
+    {key:'hrv', icon:'📈', label:'HRV', unit:'ms', decimals:0, colorFn:colorHrv,
+     note:function(v){return v>=50?'良好':v>=40?'正常':'偏低 (参考40-70)'},
      breakAfter: true},
     {key:'sleep', icon:'😴', label:'睡眠评分', unit:'分', decimals:0, colorFn:colorSleep,
      note:function(v){return v>=85?'达标 (≥85)':v>=70?'略低':'不足'}},
@@ -2050,11 +2103,13 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
     {key:'activity', icon:'🏃', label:'活动评分', unit:'分', decimals:0, colorFn:colorActivity,
      note:function(v){return v>=70?'达标 (≥70)':v>=60?'略低':'不足'},
      breakAfter: true},
-    {key:'weight', icon:'⚖️', label:'体重', unit:'kg', decimals:1, colorFn:colorWeight, note:null},
     {key:'bodyfat', icon:'🔥', label:'体脂率', unit:'%', decimals:1, colorFn:colorBodyfat,
      note:function(v){return v<=18?'优秀':v<=22?'正常':v<=25?'偏高':'过高'}},
+    {key:'visceral', icon:'🫁', label:'内脏脂肪', unit:'', decimals:1, colorFn:colorVisceral,
+     note:function(v){return v<=6?'优秀':v<=12?'正常':v<=17?'偏高':'过高'}},
     {key:'muscle', icon:'💪', label:'肌肉率', unit:'%', decimals:1, colorFn:colorMuscle,
-     note:function(v){return v>=80?'优秀':v>=75?'良好':v>=70?'一般':'偏低'}}
+     note:function(v){return v>=80?'优秀':v>=75?'良好':v>=70?'一般':'偏低'}},
+    {key:'weight', icon:'⚖️', label:'体重', unit:'kg', decimals:1, colorFn:colorWeight, note:null}
   ];
 
   var grid = document.getElementById('today-grid');
@@ -2086,7 +2141,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 })();
 
 // Update footer with actual age
-document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-22 10:01 CST · 每日自动更新';
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-22 11:26 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
