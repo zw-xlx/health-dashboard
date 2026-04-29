@@ -67,6 +67,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   <a href="#sec-readiness">就绪评分</a>
   <a href="#sec-activity">活动评分</a>
   <a href="#sec-resilience">恢复力</a>
+  <a href="#sec-eight">8 Sleep</a>
   <a href="#sec-bodyfat">体脂率</a>
   <a href="#sec-visceral">内脏脂肪</a>
   <a href="#sec-muscle">肌肉率</a>
@@ -198,23 +199,19 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 <!-- ============ 8 Sleep 床垫 ============ -->
 <div class="section" id="sec-eight">
   <div class="section-title">🛏️ 8 Sleep 床垫</div>
-  <p class="section-sub">Pod 传感器 · 2026-04-27 至 2026-04-28 · 共 2 晚</p>
+  <p class="section-sub">Pod 传感器 · 2026-04-27 至 2026-04-29 · 共 3 晚</p>
 
   <p class="section-sub" style="margin-top:20px">😴 睡眠评分 (8 Sleep)</p>
   <div class="stats" id="stats-eight-score"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-score"></canvas></div></div>
 
-  <p class="section-sub" style="margin-top:30px">⏱ 睡眠时长 (8 Sleep)</p>
-  <div class="stats" id="stats-eight-duration"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-duration"></canvas></div></div>
+  <p class="section-sub" style="margin-top:30px">❤️ 最低心率 (8 Sleep)</p>
+  <div class="stats" id="stats-eight-rhr"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-rhr"></canvas></div></div>
 
-  <p class="section-sub" style="margin-top:30px">🔄 翻身次数 (Toss &amp; Turn)</p>
-  <div class="stats" id="stats-eight-tnt"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-tnt"></canvas></div></div>
-
-  <p class="section-sub" style="margin-top:30px">🔊 打鼾比例</p>
-  <div class="stats" id="stats-eight-snore"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-snore"></canvas></div></div>
+  <p class="section-sub" style="margin-top:30px">💓 HRV (8 Sleep)</p>
+  <div class="stats" id="stats-eight-hrv"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-hrv"></canvas></div></div>
 </div>
 <hr class="divider">
 
@@ -274,7 +271,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 </div>
 
 
-<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-29 10:00 CST · 每日自动更新</footer>
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-29 14:42 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -2683,7 +2680,22 @@ const DATA = {
 ["2026-04-26",84],
 ["2026-04-27",86],
 ["2026-04-28",83],
-["2026-04-29",80]
+["2026-04-29",87]
+],
+  eight_score: [
+["2026-04-27",79],
+["2026-04-28",95],
+["2026-04-29",79]
+],
+  eight_rhr: [
+["2026-04-27",45.0],
+["2026-04-28",42.0],
+["2026-04-29",44.0]
+],
+  eight_hrv: [
+["2026-04-27",43.3],
+["2026-04-28",52.5],
+["2026-04-29",48.5]
 ]
 };
 
@@ -3168,6 +3180,63 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
   });
 })();
 
+// 12. 8 Sleep Score
+(function(){
+  var d = DATA.eight_score;
+  if(!d.length) return;
+  var vals = d.map(function(x){return x[1]});
+  var st = calcStats(vals);
+  renderStats('stats-eight-score', st, function(s){
+    return [
+      {label:'平均评分',value:s.avg.toFixed(1)+'分',cls:s.avg>=80?'good':s.avg>=65?'':'warn'},
+      {label:'最新',value:s.latest+'分',cls:s.latest>=80?'good':s.latest>=65?'':'warn'},
+      {label:'最低',value:s.min+'分',cls:''},
+      {label:'最高',value:s.max+'分',cls:'good'},
+      {label:'中位数',value:s.median+'分',cls:''},
+      {label:'记录天数',value:s.count+'天',cls:''}
+    ];
+  });
+  buildLineChart('chart-eight-score',d,'8 Sleep 睡眠评分','分',30,100,'#bc8cff',null);
+})();
+
+// 13. 8 Sleep RHR
+(function(){
+  var d = DATA.eight_rhr;
+  if(!d.length) return;
+  var vals = d.map(function(x){return x[1]});
+  var st = calcStats(vals);
+  renderStats('stats-eight-rhr', st, function(s){
+    return [
+      {label:'平均心率',value:s.avg.toFixed(1)+'bpm',cls:s.avg<=50?'good':s.avg<=55?'':'warn'},
+      {label:'最新',value:s.latest.toFixed(1)+'bpm',cls:s.latest<=50?'good':s.latest<=55?'':'warn'},
+      {label:'最低',value:s.min.toFixed(1)+'bpm',cls:'good'},
+      {label:'最高',value:s.max.toFixed(1)+'bpm',cls:''},
+      {label:'中位数',value:s.median.toFixed(1)+'bpm',cls:''},
+      {label:'记录天数',value:s.count+'天',cls:''}
+    ];
+  });
+  buildLineChart('chart-eight-rhr',d,'8 Sleep 最低心率','bpm',30,70,'#da3633',null);
+})();
+
+// 14. 8 Sleep HRV
+(function(){
+  var d = DATA.eight_hrv;
+  if(!d.length) return;
+  var vals = d.map(function(x){return x[1]});
+  var st = calcStats(vals);
+  renderStats('stats-eight-hrv', st, function(s){
+    return [
+      {label:'平均 HRV',value:s.avg.toFixed(1)+' ms',cls:s.avg>=40?'good':'warn'},
+      {label:'最新',value:s.latest.toFixed(1)+' ms',cls:s.latest>=40?'good':'warn'},
+      {label:'最低',value:s.min.toFixed(1)+' ms',cls:''},
+      {label:'最高',value:s.max.toFixed(1)+' ms',cls:'good'},
+      {label:'中位数',value:s.median.toFixed(1)+' ms',cls:''},
+      {label:'记录天数',value:s.count+'天',cls:''}
+    ];
+  });
+  buildLineChart('chart-eight-hrv',d,'8 Sleep HRV','ms',10,120,'#58a6ff',null);
+})();
+
 // ===== Today Overview =====
 (function(){
   var items = [
@@ -3228,7 +3297,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 })();
 
 // Update footer with actual age
-document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-29 10:00 CST · 每日自动更新';
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-29 14:42 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
