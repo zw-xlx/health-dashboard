@@ -272,7 +272,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 
 
 
-<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-30 12:26 CST · 每日自动更新</footer>
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-30 12:28 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -3283,7 +3283,14 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
      note:function(v){return v<=6?'优秀':v<=12?'正常':v<=17?'偏高':'过高'}},
     {key:'muscle', icon:'💪', label:'肌肉率', unit:'%', decimals:1, colorFn:colorMuscle,
      note:function(v){return v>=80?'优秀':v>=75?'良好':v>=70?'一般':'偏低'}},
-    {key:'weight', icon:'⚖️', label:'体重', unit:'kg', decimals:1, colorFn:colorWeight, note:null}
+    {key:'weight', icon:'⚖️', label:'体重', unit:'kg', decimals:1, colorFn:colorWeight, note:null,
+     breakAfter: true},
+    {key:'eight_score', icon:'🛏️', label:'8 Sleep 评分', unit:'分', decimals:0, colorFn:colorSleep,
+     note:function(v){return v>=85?'达标 (≥85)':v>=70?'良好':'不足'}},
+    {key:'eight_rhr', icon:'❤️', label:'8 Sleep 最低心率', unit:'bpm', decimals:0, colorFn:colorRhr,
+     note:function(v){return v<=45?'优秀 (40-55)':v<=55?'正常 (40-55)':'偏高'}},
+    {key:'eight_hrv', icon:'💓', label:'8 Sleep HRV', unit:'ms', decimals:0, colorFn:colorHrv,
+     note:function(v){return v>=50?'良好':v>=40?'正常':'偏低 (参考40-70)'}}
   ];
 
   var grid = document.getElementById('today-grid');
@@ -3315,7 +3322,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 })();
 
 // Update footer with actual age
-document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-30 12:26 CST · 每日自动更新';
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-30 12:28 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
