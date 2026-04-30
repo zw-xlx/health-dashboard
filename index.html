@@ -272,7 +272,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 
 
 
-<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-30 12:40 CST · 每日自动更新</footer>
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-30 12:53 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -3493,9 +3493,9 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 (function(){
   var items = [
     {key:'vascular', icon:'❤️', label:'Oura 血管年龄', unit:'岁', decimals:0, colorFn:colorVascular,
-     note:function(v,row){var d=ACTUAL_AGE-v; var base='实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':''); if(DATA.oura_pwv && DATA.oura_pwv.length){var p=DATA.oura_pwv[DATA.oura_pwv.length-1][1]; base += ' · PWV '+p.toFixed(2)+' m/s'} return base}},
+     note:function(v,row){var d=ACTUAL_AGE-v; var base='实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':''); if(DATA.oura_pwv && DATA.oura_pwv.length){var p=DATA.oura_pwv[DATA.oura_pwv.length-1][1]; base += '<br>PWV '+p.toFixed(2)+' m/s'} return base}},
     {key:'withings_va', icon:'🫀', label:'Withings 血管年龄', unit:'岁', decimals:0, colorFn:colorVascular,
-     note:function(v,row){var d=ACTUAL_AGE-v; var base='实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':''); if(DATA.withings_pwv && DATA.withings_pwv.length){var p=DATA.withings_pwv[DATA.withings_pwv.length-1][1]; base += ' · PWV '+p.toFixed(2)+' m/s'} return base}},
+     note:function(v,row){var d=ACTUAL_AGE-v; var base='实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':''); if(DATA.withings_pwv && DATA.withings_pwv.length){var p=DATA.withings_pwv[DATA.withings_pwv.length-1][1]; base += '<br>PWV '+p.toFixed(2)+' m/s'} return base}},
     {key:'resting_hr', icon:'💗', label:'静息心率', unit:'bpm', decimals:0, colorFn:colorRhr,
      note:function(v){return v<=45?'优秀 (40-55)':v<=55?'正常 (40-55)':'偏高'}},
     {key:'hrv', icon:'📈', label:'HRV', unit:'ms', decimals:0, colorFn:colorHrv,
@@ -3555,7 +3555,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 })();
 
 // Update footer with actual age
-document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-30 12:40 CST · 每日自动更新';
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-30 12:53 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
