@@ -67,11 +67,11 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   <a href="#sec-readiness">就绪评分</a>
   <a href="#sec-activity">活动评分</a>
   <a href="#sec-resilience">恢复力</a>
-  <a href="#sec-eight">8 Sleep</a>
   <a href="#sec-bodyfat">体脂率</a>
   <a href="#sec-visceral">内脏脂肪</a>
   <a href="#sec-muscle">肌肉率</a>
   <a href="#sec-weight">体重</a>
+  <a href="#sec-eight">8 Sleep</a>
 </nav>
 
 <!-- ============ 今日概览 ============ -->
@@ -196,25 +196,6 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 </div>
 <hr class="divider">
 
-<!-- ============ 8 Sleep 床垫 ============ -->
-<div class="section" id="sec-eight">
-  <div class="section-title">🛏️ 8 Sleep 床垫</div>
-  <p class="section-sub">Pod 传感器 · 2026-04-27 至 2026-04-30 · 共 4 晚</p>
-
-  <p class="section-sub" style="margin-top:20px">😴 睡眠评分 (8 Sleep)</p>
-  <div class="stats" id="stats-eight-score"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-score"></canvas></div></div>
-
-  <p class="section-sub" style="margin-top:30px">❤️ 最低心率 (8 Sleep)</p>
-  <div class="stats" id="stats-eight-rhr"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-rhr"></canvas></div></div>
-
-  <p class="section-sub" style="margin-top:30px">💓 HRV (8 Sleep)</p>
-  <div class="stats" id="stats-eight-hrv"></div>
-  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-hrv"></canvas></div></div>
-</div>
-<hr class="divider">
-
 <!-- ============ 体脂率 ============ -->
 <div class="section" id="sec-bodyfat">
   <div class="section-title">🔥 体脂率</div>
@@ -270,8 +251,28 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   <div class="bar-full"><h3>📈 年度均值</h3><div id="yearly-weight"></div></div>
 </div>
 
+<!-- ============ 8 Sleep 床垫 ============ -->
+<div class="section" id="sec-eight">
+  <div class="section-title">🛏️ 8 Sleep 床垫</div>
+  <p class="section-sub">Pod 传感器 · 2026-04-27 至 2026-04-30 · 共 4 晚</p>
 
-<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-30 10:00 CST · 每日自动更新</footer>
+  <p class="section-sub" style="margin-top:20px">😴 睡眠评分 (8 Sleep)</p>
+  <div class="stats" id="stats-eight-score"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-score"></canvas></div></div>
+
+  <p class="section-sub" style="margin-top:30px">❤️ 最低心率 (8 Sleep)</p>
+  <div class="stats" id="stats-eight-rhr"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-rhr"></canvas></div></div>
+
+  <p class="section-sub" style="margin-top:30px">💓 HRV (8 Sleep)</p>
+  <div class="stats" id="stats-eight-hrv"></div>
+  <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-hrv"></canvas></div></div>
+</div>
+<hr class="divider">
+
+
+
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-04-30 12:22 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -2695,7 +2696,7 @@ const DATA = {
 ["2026-04-27",86],
 ["2026-04-28",83],
 ["2026-04-29",85],
-["2026-04-30",80]
+["2026-04-30",78]
 ],
   eight_score: [
 ["2026-04-27",79],
@@ -3260,13 +3261,13 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
   var items = [
     {key:'vascular', icon:'❤️', label:'Oura 血管年龄', unit:'岁', decimals:0, colorFn:colorVascular,
      note:function(v){var d=ACTUAL_AGE-v; return '实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':'')}},
-    {key:'withings_va', icon:'🫀', label:'Withings 血管年龄', unit:'岁', decimals:0, colorFn:colorVascular,
-     note:function(v){var d=ACTUAL_AGE-v; return '实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':'')},
-     breakAfter: true},
     {key:'resting_hr', icon:'💗', label:'静息心率', unit:'bpm', decimals:0, colorFn:colorRhr,
      note:function(v){return v<=45?'优秀 (40-55)':v<=55?'正常 (40-55)':'偏高'}},
     {key:'hrv', icon:'📈', label:'HRV', unit:'ms', decimals:0, colorFn:colorHrv,
      note:function(v){return v>=50?'良好':v>=40?'正常':'偏低 (参考40-70)'},
+     breakAfter: true},
+    {key:'withings_va', icon:'🫀', label:'Withings 血管年龄', unit:'岁', decimals:0, colorFn:colorVascular,
+     note:function(v){var d=ACTUAL_AGE-v; return '实际'+ACTUAL_AGE.toFixed(1)+'岁'+(d>0?' / 年轻'+d.toFixed(1)+'岁':d<0?' / 偏老'+Math.abs(d).toFixed(1)+'岁':'')},
      breakAfter: true},
     {key:'sleep', icon:'😴', label:'睡眠评分', unit:'分', decimals:0, colorFn:colorSleep,
      note:function(v){return v>=85?'达标 (≥85)':v>=70?'略低':'不足'}},
@@ -3315,7 +3316,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 })();
 
 // Update footer with actual age
-document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-30 10:00 CST · 每日自动更新';
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-04-30 12:22 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
