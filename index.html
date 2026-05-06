@@ -259,20 +259,32 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
   <p class="section-sub" style="margin-top:20px">😴 睡眠评分 (8 Sleep)</p>
   <div class="stats" id="stats-eight-score"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-score"></canvas></div></div>
+  <div class="bar-section">
+    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-eight-score"></div></div>
+    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-eight-score"></div></div>
+  </div>
 
   <p class="section-sub" style="margin-top:30px">❤️ 最低心率 (8 Sleep)</p>
   <div class="stats" id="stats-eight-rhr"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-rhr"></canvas></div></div>
+  <div class="bar-section">
+    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-eight-rhr"></div></div>
+    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-eight-rhr"></div></div>
+  </div>
 
   <p class="section-sub" style="margin-top:30px">💓 HRV (8 Sleep)</p>
   <div class="stats" id="stats-eight-hrv"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-eight-hrv"></canvas></div></div>
+  <div class="bar-section">
+    <div class="bar-col"><h3>📆 最近8周均值</h3><div id="weekly-eight-hrv"></div></div>
+    <div class="bar-col"><h3>📅 月度均值</h3><div id="monthly-eight-hrv"></div></div>
+  </div>
 </div>
 <hr class="divider">
 
 
 
-<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-05-06 10:00 CST · 每日自动更新</footer>
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-05-06 11:57 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -2771,7 +2783,7 @@ const DATA = {
 ["2026-05-03",84],
 ["2026-05-04",90],
 ["2026-05-05",89],
-["2026-05-06",84]
+["2026-05-06",83]
 ],
   eight_score: [
 ["2026-04-27",79],
@@ -3545,6 +3557,8 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
     ];
   });
   buildLineChart('chart-eight-score',d,'8 Sleep 睡眠评分','分',30,100,'#bc8cff',null);
+  renderWeeklyBars('weekly-eight-score',d,colorSleep,30,100,fmtN);
+  renderBars('monthly-eight-score',groupByMonth(d),colorSleep,30,100,fmtN);
 })();
 
 // 13. 8 Sleep RHR
@@ -3564,6 +3578,8 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
     ];
   });
   buildLineChart('chart-eight-rhr',d,'8 Sleep 最低心率','bpm',30,70,'#da3633',null);
+  renderWeeklyBars('weekly-eight-rhr',d,colorRhr,30,70,fmtN);
+  renderBars('monthly-eight-rhr',groupByMonth(d),colorRhr,30,70,fmtN);
 })();
 
 // 14. 8 Sleep HRV
@@ -3583,6 +3599,8 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
     ];
   });
   buildLineChart('chart-eight-hrv',d,'8 Sleep HRV','ms',10,120,'#58a6ff',null);
+  renderWeeklyBars('weekly-eight-hrv',d,colorHrv,10,100,fmtN);
+  renderBars('monthly-eight-hrv',groupByMonth(d),colorHrv,10,100,fmtN);
 })();
 
 // ===== Today Overview =====
@@ -3651,7 +3669,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 })();
 
 // Update footer with actual age
-document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-05-06 10:00 CST · 每日自动更新';
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-05-06 11:57 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
