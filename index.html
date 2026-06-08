@@ -169,7 +169,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 <!-- ============ 活动评分 ============ -->
 <div class="section" id="sec-activity">
   <div class="section-title">🏃 活动评分</div>
-  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-06-07 · 共 281 天</p>
+  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-06-08 · 共 282 天</p>
   <div class="stats" id="stats-activity"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-activity"></canvas></div></div>
   <div class="bar-section">
@@ -254,7 +254,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 <!-- ============ 8 Sleep 床垫 ============ -->
 <div class="section" id="sec-eight">
   <div class="section-title">🛏️ 8 Sleep 床垫</div>
-  <p class="section-sub">Pod 传感器 · 2026-04-27 至 2026-06-07 · 共 38 晚</p>
+  <p class="section-sub">Pod 传感器 · 2026-04-27 至 2026-06-08 · 共 39 晚</p>
 
   <p class="section-sub" style="margin-top:20px">😴 睡眠评分 (8 Sleep)</p>
   <div class="stats" id="stats-eight-score"></div>
@@ -284,7 +284,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 
 
 
-<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-06-07 10:00 CST · 每日自动更新</footer>
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-06-08 10:00 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -3175,7 +3175,8 @@ const DATA = {
 ["2026-06-04",80],
 ["2026-06-05",78],
 ["2026-06-06",81],
-["2026-06-07",81]
+["2026-06-07",79],
+["2026-06-08",84]
 ],
   eight_score: [
 ["2026-04-27",79],
@@ -3215,7 +3216,8 @@ const DATA = {
 ["2026-06-04",77],
 ["2026-06-05",72],
 ["2026-06-06",62],
-["2026-06-07",82]
+["2026-06-07",82],
+["2026-06-08",74]
 ],
   eight_rhr: [
 ["2026-04-27",45.0],
@@ -3255,7 +3257,8 @@ const DATA = {
 ["2026-06-04",49.0],
 ["2026-06-05",48.0],
 ["2026-06-06",50.0],
-["2026-06-07",51.0]
+["2026-06-07",51.0],
+["2026-06-08",49.9]
 ],
   eight_hrv: [
 ["2026-04-27",43.3],
@@ -3295,7 +3298,8 @@ const DATA = {
 ["2026-06-04",33.3],
 ["2026-06-05",39.0],
 ["2026-06-06",31.3],
-["2026-06-07",37.2]
+["2026-06-07",37.2],
+["2026-06-08",34.6]
 ],
   oura_pwv: [
 ["2025-08-28",6.45],
@@ -4194,7 +4198,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 })();
 
 // Update footer with actual age
-document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-06-07 10:00 CST · 每日自动更新';
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-06-08 10:00 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
