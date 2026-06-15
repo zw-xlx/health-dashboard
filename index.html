@@ -169,7 +169,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 <!-- ============ 活动评分 ============ -->
 <div class="section" id="sec-activity">
   <div class="section-title">🏃 活动评分</div>
-  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-06-14 · 共 288 天</p>
+  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-06-15 · 共 289 天</p>
   <div class="stats" id="stats-activity"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-activity"></canvas></div></div>
   <div class="bar-section">
@@ -284,7 +284,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 
 
 
-<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-06-14 10:00 CST · 每日自动更新</footer>
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-06-15 10:00 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -3247,7 +3247,8 @@ const DATA = {
 ["2026-06-11",79],
 ["2026-06-12",87],
 ["2026-06-13",95],
-["2026-06-14",90]
+["2026-06-14",85],
+["2026-06-15",82]
 ],
   eight_score: [
 ["2026-04-27",79],
@@ -4292,7 +4293,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 })();
 
 // Update footer with actual age
-document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-06-14 10:00 CST · 每日自动更新';
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-06-15 10:00 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
