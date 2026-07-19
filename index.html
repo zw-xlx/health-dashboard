@@ -183,7 +183,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 <!-- ============ 恢复力 ============ -->
 <div class="section" id="sec-resilience">
   <div class="section-title">🛡️ 恢复力</div>
-  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-07-18 · 共 305 天</p>
+  <p class="section-sub">Oura Ring · 2025-08-28 至 2026-07-19 · 共 306 天</p>
   <div class="stats" id="stats-resilience"></div>
   <div class="chart-box"><div class="chart-wrap"><canvas id="chart-resilience"></canvas></div></div>
   <p class="section-sub" style="margin-top:20px">三个贡献因子趋势</p>
@@ -284,7 +284,7 @@ footer{text-align:center;color:#484f58;font-size:0.72em;padding:20px 16px 30px}
 
 
 
-<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-07-19 08:19 CST · 每日自动更新</footer>
+<footer id="pageFooter">数据来源：Oura Ring API + Withings API · 更新时间 2026-07-19 10:00 CST · 每日自动更新</footer>
 
 <script>
 // ===== All data injected by update_dashboard.py =====
@@ -1126,7 +1126,8 @@ const DATA = {
 ["2026-07-14",4],
 ["2026-07-16",4],
 ["2026-07-17",4],
-["2026-07-18",4]
+["2026-07-18",4],
+["2026-07-19",4]
 ],
   resilience_sleep: [
 ["2025-08-28",72.5],
@@ -1433,7 +1434,8 @@ const DATA = {
 ["2026-07-14",76.5],
 ["2026-07-16",78.0],
 ["2026-07-17",74.1],
-["2026-07-18",71.0]
+["2026-07-18",71.0],
+["2026-07-19",65.2]
 ],
   resilience_daytime: [
 ["2025-08-28",61.6],
@@ -1740,7 +1742,8 @@ const DATA = {
 ["2026-07-14",68.3],
 ["2026-07-16",69.1],
 ["2026-07-17",65.3],
-["2026-07-18",61.9]
+["2026-07-18",61.9],
+["2026-07-19",56.6]
 ],
   resilience_stress: [
 ["2025-08-28",48.6],
@@ -2047,7 +2050,8 @@ const DATA = {
 ["2026-07-14",38.6],
 ["2026-07-16",38.4],
 ["2026-07-17",41.2],
-["2026-07-18",45.7]
+["2026-07-18",45.7],
+["2026-07-19",49.4]
 ],
   hrv: [
 ["2025-08-28",32],
@@ -2354,7 +2358,7 @@ const DATA = {
 ["2026-07-16",61],
 ["2026-07-17",29],
 ["2026-07-18",46],
-["2026-07-19",23]
+["2026-07-19",25]
 ],
   sleep: [
 ["2025-08-28",84],
@@ -2662,7 +2666,7 @@ const DATA = {
 ["2026-07-16",80],
 ["2026-07-17",67],
 ["2026-07-18",76],
-["2026-07-19",56]
+["2026-07-19",80]
 ],
   readiness: [
 ["2025-08-28",82],
@@ -2970,7 +2974,7 @@ const DATA = {
 ["2026-07-16",88],
 ["2026-07-17",70],
 ["2026-07-18",80],
-["2026-07-19",52]
+["2026-07-19",69]
 ],
   resting_hr: [
 ["2025-08-28",46],
@@ -3277,7 +3281,7 @@ const DATA = {
 ["2026-07-16",40],
 ["2026-07-17",46],
 ["2026-07-18",45],
-["2026-07-19",55]
+["2026-07-19",53]
 ],
   activity: [
 ["2025-08-28",60],
@@ -3602,7 +3606,7 @@ const DATA = {
 ["2026-07-16",82],
 ["2026-07-17",92],
 ["2026-07-18",84],
-["2026-07-19",84]
+["2026-07-19",85]
 ],
   eight_score: [
 ["2026-04-27",79],
@@ -4772,7 +4776,7 @@ function fmtN(a,n){return a.toFixed(1)+' (n='+n+')'}
 })();
 
 // Update footer with actual age
-document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-07-19 08:19 CST · 每日自动更新';
+document.getElementById('pageFooter').textContent = '数据来源：Oura Ring API + Withings API · 实际年龄 '+ACTUAL_AGE.toFixed(1)+' 岁 · 更新时间 2026-07-19 10:00 CST · 每日自动更新';
 
 // ===== Scroll spy for nav =====
 (function(){
